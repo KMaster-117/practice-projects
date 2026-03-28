@@ -1,0 +1,52 @@
+@baseUrl = http://localhost:8000
+
+### 1. 健康检查
+GET {{baseUrl}}/health
+
+### 2. 创建短链接（自动生成短码）
+POST {{baseUrl}}/shorten
+Content-Type: application/json
+
+{
+    "url": "https://www.python.org",
+    "expire_days": 7
+}
+
+### 3. 创建短链接（自定义短码）
+POST {{baseUrl}}/shorten
+Content-Type: application/json
+
+{
+    "url": "https://www.baidu.com",
+    "custom_code": "baidu",
+    "expire_days": 30
+}
+
+### 4. 创建短链接（不过期）
+POST {{baseUrl}}/shorten
+Content-Type: application/json
+
+{
+    "url": "https://fastapi.tiangolo.com"
+}
+
+### 5. 访问短链接（将 {code} 替换为实际的短码）
+GET {{baseUrl}}/JBJn64
+
+### 6. 查询统计（将 {code} 替换为实际的短码）
+GET {{baseUrl}}/stats/JBJn64
+
+### 7. 删除短链接（将 {code} 替换为实际的短码）
+DELETE {{baseUrl}}/JBJn64
+
+### 8. 测试不存在的短码
+GET {{baseUrl}}/notexist
+
+### 9. 测试重复自定义短码
+POST {{baseUrl}}/shorten
+Content-Type: application/json
+
+{
+    "url": "https://www.google.com",
+    "custom_code": "baidu"
+}

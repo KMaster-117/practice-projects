@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# 虚拟环境
+venv/
+.venv/
+env/
+.env
+
+# 敏感配置
+.env
+*.env
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# 日志
+*.log
+
+# 数据库
+*.db
+*.sqlite
+
+# 每个项目可能有自己的 .gitignore
+# 这里只放全局忽略规则
