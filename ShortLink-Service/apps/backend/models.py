@@ -7,12 +7,12 @@ class URLMapping(models.Model):
 
     id = fields.BigIntField(pk=True)
     short_code = fields.CharField(
-        max_length=16, unique=True, index=True, desciription="短码"
+        max_length=16, unique=True, index=True, description="短码"
     )
     original_url = fields.CharField(max_length=2048, description="原始URL")
     access_count = fields.IntField(default=0, description="访问次数")
-    created_at = fields.DatetimeField(auto_now_add=True, descriptoin="创建时间")
-    expire_at = fields.DatetimeField(null=True, descriptoin="过期时间")
+    created_at = fields.DatetimeField(auto_now_add=True, description="创建时间")
+    expire_at = fields.DatetimeField(null=True, description="过期时间")
 
     class Meta:
         table = "url_mapping"
