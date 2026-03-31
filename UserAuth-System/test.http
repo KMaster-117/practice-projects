@@ -1,0 +1,333 @@
+@baseUrl = http://localhost:8000
+### ========================================
+### 1. 用户注册测试
+### ========================================
+
+### 1.1 注册新用户（完整信息）
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "zhangsan",
+    "password": "zhangsan123",
+    "nickname": "张三",
+    "email": "zhangsan@example.com"
+}
+
+### 1.2 注册新用户（仅必填信息）
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "lisi",
+    "password": "lisi123",
+    "nickname": "李四"
+}
+
+### 1.3 注册新用户（中文用户名）
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "王小明",
+    "password": "wang123",
+    "nickname": "小明",
+    "email": "wang@example.com"
+}
+
+### 1.4 注册新用户（英文+数字）
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "alice_2024",
+    "password": "alice123",
+    "nickname": "Alice",
+    "email": "alice@example.com"
+}
+
+### 1.5 测试注册重复用户名（应该失败）
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "zhangsan",
+    "password": "newpass123",
+    "nickname": "张三重复"
+}
+
+### 1.6 测试注册用户名过短（应该失败）
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "ab",
+    "password": "password123",
+    "nickname": "用户名太短"
+}
+
+### 1.7 测试注册密码过短（应该失败）
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "shortpass",
+    "password": "123",
+    "nickname": "密码太短"
+}
+
+### 1.8 测试注册无效邮箱格式（应该失败）
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "invalidemail",
+    "password": "password123",
+    "nickname": "邮箱错误",
+    "email": "invalid-email"
+}
+
+### 1.9 测试注册已存在的邮箱（应该失败）
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "newuser",
+    "password": "password123",
+    "nickname": "新用户",
+    "email": "zhangsan@example.com"
+}
+
+### ========================================
+### 2. 用户登录测试
+### ========================================
+
+### 2.1 登录 - 正确的用户名密码
+# @name login_zhangsan
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "zhangsan",
+    "password": "zhangsan123"
+}
+
+### 保存张三的token
+# @token_zhangsan = {{login_zhangsan.response.body.access_token}}
+
+### 2.2 登录 - 李四用户
+# @name login_lisi
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "lisi",
+    "password": "lisi123"
+}
+
+### 保存李四的token
+# @token_lisi = {{login_lisi.response.body.access_token}}
+
+### 2.3 登录 - 中文用户名
+# @name login_wang
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "王小明",
+    "password": "wang123"
+}
+
+### 保存王小明的token
+# @token_wang = {{login_wang.response.body.access_token}}
+
+### 2.4 登录 - 错误的密码（应该失败）
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "zhangsan",
+    "password": "wrongpassword"
+}
+
+### 2.5 登录 - 不存在的用户（应该失败）
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "nonexistent",
+    "password": "password123"
+}
+
+### 2.6 登录 - 用户名为空（应该失败）
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "",
+    "password": "password123"
+}
+
+# ### ========================================
+# ### 3. 获取当前用户信息测试
+# ### ========================================
+
+# ### 3.1 获取张三的用户信息
+# GET {{baseUrl}}/auth/me
+# Authorization: Bearer {{token_zhangsan}}
+
+# ### 3.2 获取李四的用户信息
+# GET {{baseUrl}}/auth/me
+# Authorization: Bearer {{token_lisi}}
+
+# ### 3.3 获取王小明的用户信息
+# GET {{baseUrl}}/auth/me
+# Authorization: Bearer {{token_wang}}
+
+# ### 3.4 未提供token获取信息（应该失败）
+# GET {{baseUrl}}/auth/me
+
+# ### 3.5 提供无效token获取信息（应该失败）
+# GET {{baseUrl}}/auth/me
+# Authorization: Bearer invalid_token_12345
+
+# ### ========================================
+# ### 4. Token刷新测试
+# ### ========================================
+
+# ### 4.1 刷新张三的token
+# POST {{baseUrl}}/auth/refresh
+# Content-Type: application/json
+
+# {
+#     "refresh_token": "{{token_zhangsan}}"
+# }
+
+# ### 4.2 刷新李四的token
+# POST {{baseUrl}}/auth/refresh
+# Content-Type: application/json
+
+# {
+#     "refresh_token": "{{token_lisi}}"
+# }
+
+# ### 4.3 使用无效token刷新（应该失败）
+# POST {{baseUrl}}/auth/refresh
+# Content-Type: application/json
+
+# {
+#     "refresh_token": "invalid_token_12345"
+# }
+
+# ### ========================================
+# ### 5. 用户注销测试
+# ### ========================================
+
+# ### 5.1 注销张三用户
+# POST {{baseUrl}}/auth/logout
+# Authorization: Bearer {{token_zhangsan}}
+
+# ### 5.2 注销后再次获取张三信息（应该失败）
+# GET {{baseUrl}}/auth/me
+# Authorization: Bearer {{token_zhangsan}}
+
+# ### 5.3 注销李四用户
+# POST {{baseUrl}}/auth/logout
+# Authorization: Bearer {{token_lisi}}
+
+# ### 5.4 未提供token注销（应该失败）
+# POST {{baseUrl}}/auth/logout
+
+# ### ========================================
+# ### 6. 完整业务流程测试
+# ### ========================================
+
+# ### 6.1 注册新用户
+# POST {{baseUrl}}/auth/register
+# Content-Type: application/json
+
+# {
+#     "username": "testflow",
+#     "password": "flow123",
+#     "nickname": "流程测试用户",
+#     "email": "flow@example.com"
+# }
+
+# ### 6.2 登录新用户
+# # @name login_flow
+# POST {{baseUrl}}/auth/login
+# Content-Type: application/json
+
+# {
+#     "username": "testflow",
+#     "password": "flow123"
+# }
+
+# ### 保存流程用户的token
+# # @token_flow = {{login_flow.response.body.access_token}}
+
+# ### 6.3 获取登录后的用户信息
+# GET {{baseUrl}}/auth/me
+# Authorization: Bearer {{token_flow}}
+
+# ### 6.4 刷新token
+# POST {{baseUrl}}/auth/refresh
+# Content-Type: application/json
+
+# {
+#     "refresh_token": "{{token_flow}}"
+# }
+
+# ### 6.5 注销用户
+# POST {{baseUrl}}/auth/logout
+# Authorization: Bearer {{token_flow}}
+
+# ### ========================================
+# ### 7. 并发登录测试（同一用户多设备）
+# ### ========================================
+
+# ### 7.1 第一次登录（设备1）
+# # @name login_device1
+# POST {{baseUrl}}/auth/login
+# Content-Type: application/json
+
+# {
+#     "username": "zhangsan",
+#     "password": "zhangsan123"
+# }
+
+# ### 保存设备1的token
+# # @token_device1 = {{login_device1.response.body.access_token}}
+
+# ### 7.2 第二次登录（设备2）
+# # @name login_device2
+# POST {{baseUrl}}/auth/login
+# Content-Type: application/json
+
+# {
+#     "username": "zhangsan",
+#     "password": "zhangsan123"
+# }
+
+# ### 保存设备2的token
+# @token_device2 = {{login_device2.response.body.access_token}}
+
+# ### 7.3 设备1访问（应该成功）
+# GET {{baseUrl}}/auth/me
+# Authorization: Bearer {{token_device1}}
+
+# ### 7.4 设备2访问（应该成功）
+# GET {{baseUrl}}/auth/me
+# Authorization: Bearer {{token_device2}}
+
+# ### 7.5 设备1注销（只影响设备1）
+# POST {{baseUrl}}/auth/logout
+# Authorization: Bearer {{token_device1}}
+
+# ### 7.6 设备1注销后访问（应该失败）
+# GET {{baseUrl}}/auth/me
+# Authorization: Bearer {{token_device1}}
+
+# ### 7.7 设备2仍可访问（应该成功）
+# GET {{baseUrl}}/auth/me
+# Authorization: Bearer {{token_device2}}

@@ -1,0 +1,17 @@
+[project]
+name = "sh-backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiomysql>=0.3.2",
+    "bcrypt>=5.0.0",
+    "fastapi>=0.135.2",
+    "pydantic-settings>=2.13.1",
+    "python-jose[cryptography]>=3.5.0",
+    "redis>=7.4.0",
+    "tortoise-orm>=1.1.7",
+    "tzdata>=2025.3",
+    "uvicorn>=0.42.0",
+]

@@ -1,4 +1,3 @@
-
 # 我的 Python 练习项目集
 
 汇总我练习过的所有项目，涵盖 FastAPI、Tortoise-ORM、Redis、MySQL 等技术栈。
@@ -8,7 +7,7 @@
 | 项目                           | 技术栈                  | 说明             |
 | ------------------------------ | ----------------------- | ---------------- |
 | [短链接服务](./ShortLink-Service) | FastAPI + MySQL + Redis | 短链接生成与跳转 |
-|                                |                         |                  |
+| [用户认证系统](./UserAuth-System) | FastAPI + MySQL + Redis | 用户权限管理     |
 
 ## 🚀 快速开始
 
