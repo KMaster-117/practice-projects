@@ -4,11 +4,12 @@
 
 ## 📁 项目列表
 
-| 项目                           | 技术栈                        | 说明             |
-| ------------------------------ | ----------------------------- | ---------------- |
-| [短链接服务](./ShortLink-Service) | FastAPI + MySQL + Redis       | 短链接生成与跳转 |
-| [用户认证系统](./UserAuth-System) | FastAPI + MySQL + Redis + JWT | 用户权限管理     |
-| [博客网站](./Blog-System)         | FastAPI + MySQL + Redis + JWT | 纯后端的博客网站 |
+| 项目                           | 技术栈                        | 说明                 |
+| ------------------------------ | ----------------------------- | -------------------- |
+| [短链接服务](./ShortLink-Service) | FastAPI + MySQL + Redis       | 短链接生成与跳转     |
+| [用户认证系统](./UserAuth-System) | FastAPI + MySQL + Redis + JWT | 用户权限管理         |
+| [博客网站](./Blog-System)         | FastAPI + MySQL + Redis + JWT | 纯后端的博客网站     |
+| [聊天机器人](./ChatBot-Service)   | FastAPI+Uvicorn               | 简单的聊天机器人服务 |
 
 ## 🚀 快速开始
 

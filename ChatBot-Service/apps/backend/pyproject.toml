@@ -1,0 +1,23 @@
+[project]
+name = "chat-backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiomysql==0.3.2",
+    "aioredis==2.0.1",
+    "bcrypt==4.0.1",
+    "email-validator==2.3.0",
+    "fastapi==0.135.2",
+    "openai>=2.31.0",
+    "passlib[bcrypt]==1.7.4",
+    "pydantic-settings==2.13.1",
+    "python-dotenv==1.2.2",
+    "python-jose[cryptography]==3.5.0",
+    "python-multipart==0.0.22",
+    "pytz==2026.1.post1",
+    "redis==7.4.0",
+    "tortoise-orm==1.1.7",
+    "uvicorn[standard]==0.42.0",
+]
